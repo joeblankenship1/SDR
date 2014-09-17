@@ -2,7 +2,7 @@
 ##################################################
 # Gnuradio Python Flow Graph
 # Title: Dial Tone
-# Generated: Sat May 24 22:11:41 2014
+# Generated: Wed Aug 20 19:56:15 2014
 ##################################################
 
 from gnuradio import analog
@@ -128,11 +128,11 @@ class Dial_Tone(grc_wxgui.top_block_gui):
 		##################################################
 		# Connections
 		##################################################
-		self.connect((self.blocks_add_xx_0, 0), (self.audio_sink_0, 0))
-		self.connect((self.analog_sig_source_x_0, 0), (self.blocks_add_xx_0, 0))
-		self.connect((self.analog_sig_source_x_1, 0), (self.blocks_add_xx_0, 1))
-		self.connect((self.analog_noise_source_x_0, 0), (self.blocks_add_xx_0, 2))
 		self.connect((self.blocks_add_xx_0, 0), (self.wxgui_scopesink2_0, 0))
+		self.connect((self.analog_noise_source_x_0, 0), (self.blocks_add_xx_0, 2))
+		self.connect((self.analog_sig_source_x_1, 0), (self.blocks_add_xx_0, 1))
+		self.connect((self.analog_sig_source_x_0, 0), (self.blocks_add_xx_0, 0))
+		self.connect((self.blocks_add_xx_0, 0), (self.audio_sink_0, 0))
 
 
 	def get_src_freq_1(self):
@@ -140,9 +140,9 @@ class Dial_Tone(grc_wxgui.top_block_gui):
 
 	def set_src_freq_1(self, src_freq_1):
 		self.src_freq_1 = src_freq_1
-		self.analog_sig_source_x_0.set_frequency(self.src_freq_1)
 		self._src_freq_1_slider.set_value(self.src_freq_1)
 		self._src_freq_1_text_box.set_value(self.src_freq_1)
+		self.analog_sig_source_x_0.set_frequency(self.src_freq_1)
 
 	def get_samp_rate(self):
 		return self.samp_rate
@@ -158,18 +158,18 @@ class Dial_Tone(grc_wxgui.top_block_gui):
 
 	def set_noise_amp(self, noise_amp):
 		self.noise_amp = noise_amp
-		self.analog_noise_source_x_0.set_amplitude(self.noise_amp)
 		self._noise_amp_slider.set_value(self.noise_amp)
 		self._noise_amp_text_box.set_value(self.noise_amp)
+		self.analog_noise_source_x_0.set_amplitude(self.noise_amp)
 
 	def get_Src_freq_2(self):
 		return self.Src_freq_2
 
 	def set_Src_freq_2(self, Src_freq_2):
 		self.Src_freq_2 = Src_freq_2
-		self.analog_sig_source_x_1.set_frequency(self.Src_freq_2)
 		self._Src_freq_2_slider.set_value(self.Src_freq_2)
 		self._Src_freq_2_text_box.set_value(self.Src_freq_2)
+		self.analog_sig_source_x_1.set_frequency(self.Src_freq_2)
 
 if __name__ == '__main__':
 	parser = OptionParser(option_class=eng_option, usage="%prog: [options]")
