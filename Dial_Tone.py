@@ -2,7 +2,7 @@
 ##################################################
 # Gnuradio Python Flow Graph
 # Title: Dial Tone
-# Generated: Thu Sep 25 19:47:54 2014
+# Generated: Wed Dec 17 19:39:49 2014
 ##################################################
 
 from gnuradio import analog
@@ -131,8 +131,8 @@ class Dial_Tone(grc_wxgui.top_block_gui):
 		self.connect((self.blocks_add_xx_0, 0), (self.wxgui_scopesink2_0, 0))
 		self.connect((self.analog_noise_source_x_0, 0), (self.blocks_add_xx_0, 2))
 		self.connect((self.analog_sig_source_x_1, 0), (self.blocks_add_xx_0, 1))
-		self.connect((self.analog_sig_source_x_0, 0), (self.blocks_add_xx_0, 0))
 		self.connect((self.blocks_add_xx_0, 0), (self.audio_sink_0, 0))
+		self.connect((self.analog_sig_source_x_0, 0), (self.blocks_add_xx_0, 0))
 
 
 	def get_src_freq_1(self):
@@ -150,17 +150,17 @@ class Dial_Tone(grc_wxgui.top_block_gui):
 	def set_samp_rate(self, samp_rate):
 		self.samp_rate = samp_rate
 		self.analog_sig_source_x_1.set_sampling_freq(self.samp_rate)
-		self.analog_sig_source_x_0.set_sampling_freq(self.samp_rate)
 		self.wxgui_scopesink2_0.set_sample_rate(self.samp_rate)
+		self.analog_sig_source_x_0.set_sampling_freq(self.samp_rate)
 
 	def get_noise_amp(self):
 		return self.noise_amp
 
 	def set_noise_amp(self, noise_amp):
 		self.noise_amp = noise_amp
+		self.analog_noise_source_x_0.set_amplitude(self.noise_amp)
 		self._noise_amp_slider.set_value(self.noise_amp)
 		self._noise_amp_text_box.set_value(self.noise_amp)
-		self.analog_noise_source_x_0.set_amplitude(self.noise_amp)
 
 	def get_Src_freq_2(self):
 		return self.Src_freq_2
