@@ -2,7 +2,7 @@
 ##################################################
 # Gnuradio Python Flow Graph
 # Title: Dial Tone
-# Generated: Wed Dec 17 19:39:49 2014
+# Generated: Wed Jan 21 19:51:11 2015
 ##################################################
 
 from gnuradio import analog
@@ -128,11 +128,11 @@ class Dial_Tone(grc_wxgui.top_block_gui):
 		##################################################
 		# Connections
 		##################################################
-		self.connect((self.blocks_add_xx_0, 0), (self.wxgui_scopesink2_0, 0))
 		self.connect((self.analog_noise_source_x_0, 0), (self.blocks_add_xx_0, 2))
 		self.connect((self.analog_sig_source_x_1, 0), (self.blocks_add_xx_0, 1))
 		self.connect((self.blocks_add_xx_0, 0), (self.audio_sink_0, 0))
 		self.connect((self.analog_sig_source_x_0, 0), (self.blocks_add_xx_0, 0))
+		self.connect((self.blocks_add_xx_0, 0), (self.wxgui_scopesink2_0, 0))
 
 
 	def get_src_freq_1(self):

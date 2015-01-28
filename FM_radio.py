@@ -2,7 +2,7 @@
 ##################################################
 # Gnuradio Python Flow Graph
 # Title: Fm Radio
-# Generated: Wed Dec 17 19:41:17 2014
+# Generated: Wed Jan 21 19:55:33 2015
 ##################################################
 
 from gnuradio import audio
@@ -126,8 +126,8 @@ class FM_radio(grc_wxgui.top_block_gui):
 
 	def set_freq(self, freq):
 		self.freq = freq
-		self._freq_text_box.set_value(self.freq)
 		self.rtlsdr_source_c_0.set_center_freq(self.freq, 0)
+		self._freq_text_box.set_value(self.freq)
 
 if __name__ == '__main__':
 	parser = OptionParser(option_class=eng_option, usage="%prog: [options]")
