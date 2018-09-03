@@ -1,9 +1,21 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
 ##################################################
-# Gnuradio Python Flow Graph
+# GNU Radio Python Flow Graph
 # Title: Dial Tone
-# Generated: Sat Jan 23 11:07:18 2016
+# Generated: Sat Sep  1 15:40:36 2018
 ##################################################
+
+
+if __name__ == '__main__':
+    import ctypes
+    import sys
+    if sys.platform.startswith('linux'):
+        try:
+            x11 = ctypes.cdll.LoadLibrary('libX11.so')
+            x11.XInitThreads()
+        except:
+            print "Warning: failed to XInitThreads()"
 
 from gnuradio import analog
 from gnuradio import audio
@@ -18,6 +30,7 @@ from gnuradio.wxgui import scopesink2
 from grc_gnuradio import wxgui as grc_wxgui
 from optparse import OptionParser
 import wx
+
 
 class Dial_Tone(grc_wxgui.top_block_gui):
 
@@ -43,7 +56,7 @@ class Dial_Tone(grc_wxgui.top_block_gui):
         	sizer=_src_freq_1_sizer,
         	value=self.src_freq_1,
         	callback=self.set_src_freq_1,
-        	label="Src_Freq_1",
+        	label='Src_Freq_1',
         	converter=forms.float_converter(),
         	proportion=0,
         )
@@ -66,7 +79,7 @@ class Dial_Tone(grc_wxgui.top_block_gui):
         	sizer=_noise_amp_sizer,
         	value=self.noise_amp,
         	callback=self.set_noise_amp,
-        	label="noise_amp",
+        	label='noise_amp',
         	converter=forms.float_converter(),
         	proportion=0,
         )
@@ -89,7 +102,7 @@ class Dial_Tone(grc_wxgui.top_block_gui):
         	sizer=_Src_freq_2_sizer,
         	value=self.Src_freq_2,
         	callback=self.set_Src_freq_2,
-        	label="Src_Freq_2",
+        	label='Src_Freq_2',
         	converter=forms.float_converter(),
         	proportion=0,
         )
@@ -108,7 +121,7 @@ class Dial_Tone(grc_wxgui.top_block_gui):
         self.Add(_Src_freq_2_sizer)
         self.wxgui_scopesink2_0 = scopesink2.scope_sink_f(
         	self.GetWin(),
-        	title="Scope Plot",
+        	title='Scope Plot',
         	sample_rate=samp_rate,
         	v_scale=0,
         	v_offset=0,
@@ -117,11 +130,11 @@ class Dial_Tone(grc_wxgui.top_block_gui):
         	xy_mode=False,
         	num_inputs=1,
         	trig_mode=wxgui.TRIG_MODE_AUTO,
-        	y_axis_label="Counts",
+        	y_axis_label='Counts',
         )
         self.Add(self.wxgui_scopesink2_0.win)
         self.blocks_add_xx_0 = blocks.add_vff(1)
-        self.audio_sink_0 = audio.sink(48000, "", True)
+        self.audio_sink_0 = audio.sink(48000, '', True)
         self.analog_sig_source_x_1 = analog.sig_source_f(samp_rate, analog.GR_COS_WAVE, Src_freq_2, 0.1, 0)
         self.analog_sig_source_x_0 = analog.sig_source_f(samp_rate, analog.GR_COS_WAVE, src_freq_1, .1, 0)
         self.analog_noise_source_x_0 = analog.noise_source_f(analog.GR_GAUSSIAN, noise_amp, 0)
@@ -129,13 +142,11 @@ class Dial_Tone(grc_wxgui.top_block_gui):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.analog_sig_source_x_0, 0), (self.blocks_add_xx_0, 0))
-        self.connect((self.blocks_add_xx_0, 0), (self.audio_sink_0, 0))
-        self.connect((self.analog_sig_source_x_1, 0), (self.blocks_add_xx_0, 1))
         self.connect((self.analog_noise_source_x_0, 0), (self.blocks_add_xx_0, 2))
+        self.connect((self.analog_sig_source_x_0, 0), (self.blocks_add_xx_0, 0))
+        self.connect((self.analog_sig_source_x_1, 0), (self.blocks_add_xx_0, 1))
+        self.connect((self.blocks_add_xx_0, 0), (self.audio_sink_0, 0))
         self.connect((self.blocks_add_xx_0, 0), (self.wxgui_scopesink2_0, 0))
-
-
 
     def get_src_freq_1(self):
         return self.src_freq_1
@@ -151,9 +162,9 @@ class Dial_Tone(grc_wxgui.top_block_gui):
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
-        self.analog_sig_source_x_0.set_sampling_freq(self.samp_rate)
-        self.analog_sig_source_x_1.set_sampling_freq(self.samp_rate)
         self.wxgui_scopesink2_0.set_sample_rate(self.samp_rate)
+        self.analog_sig_source_x_1.set_sampling_freq(self.samp_rate)
+        self.analog_sig_source_x_0.set_sampling_freq(self.samp_rate)
 
     def get_noise_amp(self):
         return self.noise_amp
@@ -173,17 +184,13 @@ class Dial_Tone(grc_wxgui.top_block_gui):
         self._Src_freq_2_text_box.set_value(self.Src_freq_2)
         self.analog_sig_source_x_1.set_frequency(self.Src_freq_2)
 
-if __name__ == '__main__':
-    import ctypes
-    import sys
-    if sys.platform.startswith('linux'):
-        try:
-            x11 = ctypes.cdll.LoadLibrary('libX11.so')
-            x11.XInitThreads()
-        except:
-            print "Warning: failed to XInitThreads()"
-    parser = OptionParser(option_class=eng_option, usage="%prog: [options]")
-    (options, args) = parser.parse_args()
-    tb = Dial_Tone()
+
+def main(top_block_cls=Dial_Tone, options=None):
+
+    tb = top_block_cls()
     tb.Start(True)
     tb.Wait()
+
+
+if __name__ == '__main__':
+    main()
