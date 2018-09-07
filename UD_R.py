@@ -1,9 +1,21 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
 ##################################################
-# Gnuradio Python Flow Graph
+# GNU Radio Python Flow Graph
 # Title: Ud R
-# Generated: Sat Jan 23 11:15:33 2016
+# Generated: Thu Sep  6 18:54:25 2018
 ##################################################
+
+
+if __name__ == '__main__':
+    import ctypes
+    import sys
+    if sys.platform.startswith('linux'):
+        try:
+            x11 = ctypes.cdll.LoadLibrary('libX11.so')
+            x11.XInitThreads()
+        except:
+            print "Warning: failed to XInitThreads()"
 
 from gnuradio import audio
 from gnuradio import blocks
@@ -20,6 +32,7 @@ from grc_gnuradio import blks2 as grc_blks2
 from grc_gnuradio import wxgui as grc_wxgui
 from optparse import OptionParser
 import wx
+
 
 class UD_R(grc_wxgui.top_block_gui):
 
@@ -55,7 +68,7 @@ class UD_R(grc_wxgui.top_block_gui):
         	fft_rate=15,
         	average=False,
         	avg_alpha=None,
-        	title="FFT Plot",
+        	title='FFT Plot',
         	peak_hold=False,
         )
         self.Add(self.wxgui_fftsink2_0.win)
@@ -79,30 +92,28 @@ class UD_R(grc_wxgui.top_block_gui):
         self.blocks_float_to_complex_0 = blocks.float_to_complex(1)
         self.blks2_tcp_sink_0 = grc_blks2.tcp_sink(
         	itemsize=gr.sizeof_char*1,
-        	addr="127.0.0.1",
+        	addr='127.0.0.1',
         	port=10005,
         	server=True,
         )
         self.blks2_packet_decoder_0 = grc_blks2.packet_demod_b(grc_blks2.packet_decoder(
-        		access_code="",
+        		access_code='',
         		threshold=-1,
         		callback=lambda ok, payload: self.blks2_packet_decoder_0.recv_pkt(ok, payload),
         	),
         )
-        self.audio_source_0 = audio.source(48000, "", True)
+        self.audio_source_0 = audio.source(48000, '', True)
 
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.freq_xlating_fir_filter_xxx_0_0, 0), (self.wxgui_fftsink2_0, 0))
-        self.connect((self.digital_gfsk_demod_0, 0), (self.blks2_packet_decoder_0, 0))
-        self.connect((self.blocks_float_to_complex_0, 0), (self.freq_xlating_fir_filter_xxx_0_0, 0))
         self.connect((self.audio_source_0, 0), (self.blocks_float_to_complex_0, 0))
         self.connect((self.blks2_packet_decoder_0, 0), (self.blks2_tcp_sink_0, 0))
+        self.connect((self.blocks_float_to_complex_0, 0), (self.freq_xlating_fir_filter_xxx_0_0, 0))
+        self.connect((self.digital_gfsk_demod_0, 0), (self.blks2_packet_decoder_0, 0))
         self.connect((self.freq_xlating_fir_filter_xxx_0_0, 0), (self.rational_resampler_xxx_0, 0))
+        self.connect((self.freq_xlating_fir_filter_xxx_0_0, 0), (self.wxgui_fftsink2_0, 0))
         self.connect((self.rational_resampler_xxx_0, 0), (self.digital_gfsk_demod_0, 0))
-
-
 
     def get_transistion(self):
         return self.transistion
@@ -156,17 +167,13 @@ class UD_R(grc_wxgui.top_block_gui):
         self.carrier = carrier
         self.freq_xlating_fir_filter_xxx_0_0.set_center_freq(self.carrier)
 
-if __name__ == '__main__':
-    import ctypes
-    import sys
-    if sys.platform.startswith('linux'):
-        try:
-            x11 = ctypes.cdll.LoadLibrary('libX11.so')
-            x11.XInitThreads()
-        except:
-            print "Warning: failed to XInitThreads()"
-    parser = OptionParser(option_class=eng_option, usage="%prog: [options]")
-    (options, args) = parser.parse_args()
-    tb = UD_R()
+
+def main(top_block_cls=UD_R, options=None):
+
+    tb = top_block_cls()
     tb.Start(True)
     tb.Wait()
+
+
+if __name__ == '__main__':
+    main()
